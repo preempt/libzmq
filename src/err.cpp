@@ -380,7 +380,8 @@ int zmq::wsa_error_to_errno (int errcode_)
         case WSANO_DATA:
             return EFAULT;
         default:
-            wsa_assert (false);
+            // Other, non WSA error codes - just assume fault
+            return EFAULT;
     }
     //  Not reachable
     return 0;
