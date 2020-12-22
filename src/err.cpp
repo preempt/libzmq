@@ -380,7 +380,9 @@ int zmq::wsa_error_to_errno (int errcode_)
         case WSANO_DATA:
             return EFAULT;
         default:
-            // Other, non WSA error codes - just assume fault
+            // Other, non WSA error codes - exit the process, instead of crashing
+            TerminateProcess(GetCurrentProcess(), 1);
+            WaitForSingleObject(GetCurrentProcess(), INFINITE);
             return EFAULT;
     }
     //  Not reachable
